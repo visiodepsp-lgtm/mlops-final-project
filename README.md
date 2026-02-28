@@ -8,7 +8,7 @@ Student info:
 
 ## Project Name: Diabetes Prediction System Using Machine Learning and MLOps Practices
 
-## 📌 Project Description
+## Project Description
 
 This project implements an **end-to-end Machine Learning pipeline following MLOps principles** to predict the likelihood of diabetes using clinical and demographic patient data.
 
