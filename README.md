@@ -106,14 +106,23 @@ joblib.dump(model, "models/best_diabetes_model.pkl")
 
 ### Serving
 
-a.a.a.a
+python src/serving_flask.py
+POST http://127.0.0.1:5000/predict
 
 ### Predictions
 Running predictions using `curl` command:
-```sh
-curl -X POST http://127.0.0.1:5000/predict2 -H "Content-Type: application/json" -d '{"experience_score": 4, "test_score": 7, "interview_score": 8}
-```
-
+curl -X POST http://127.0.0.1:5000/predict \
+-H "Content-Type: application/json" \
+-d '{
+  "gender": "Female",
+  "age": 45,
+  "hypertension": 0,
+  "heart_disease": 0,
+  "smoking_history": "never",
+  "bmi": 28.5,
+  "HbA1c_level": 6.8,
+  "blood_glucose_level": 150
+}'
 Using Python request library: 
 ```sh
 python src/predict.py
