@@ -1,30 +1,30 @@
-import json
-import pickle
-import requests
 
-def simple_predict(model_pickle_path: str):
-    # Loading model to compare the results
-    #
-    with open(model_pickle_path,'rb') as f:
-        model = pickle.load(f)
+import joblib
+import pandas as pd
 
-    predictions = model.predict([[2, 9, 6], [1, 4, 4]])
+def predict(sample_dict):
 
-    print(f"My prediction: ${ [ round(prediction,2) for prediction in predictions] }")
+    model = joblib.load("models/best_diabetes_model.pkl")
 
+    sample_df = pd.DataFrame([sample_dict])
 
-def predict_using_api(url: str):
-    input_features = {
-        "experience_score": 4,
-        "test_score": 7,
-        "interview_score": 8
-    }
-    headers = {"Content-Type": "application/json"}
-    payload = json.dumps(input_features)
-    response = requests.post(url, data=payload, headers=headers)
-    prediction = response.json()
-    print(f"My prediction: {prediction}")
+    prediction = model.predict(sample_df)
+
+    return int(prediction[0])
+
 
 if __name__ == "__main__":
-    #simple_predict('models/model.pkl')
-    predict_using_api("http://127.0.0.1:5000/predict2")
+
+    example = {
+        "gender": "Female",
+        "age": 45,
+        "hypertension": 0,
+        "heart_disease": 0,
+        "smoking_history": "never",
+        "bmi": 28.5,
+        "HbA1c_level": 6.8,
+        "blood_glucose_level": 150
+    }
+
+    result = predict(example)
+    print("Prediction:", result)
