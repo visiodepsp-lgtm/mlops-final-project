@@ -25,7 +25,7 @@ The dataset used comes from Kaggle’s *Diabetes Prediction Dataset*, which incl
 
 ---
 
-## 🎯 Problem Definition
+## Problem Definition
 
 Diabetes is a chronic condition that can lead to severe health complications if not diagnosed early. Using supervised machine learning techniques, this project aims to build a classification model capable of predicting whether a patient has diabetes based on available clinical features.
 
@@ -39,7 +39,7 @@ Develop a reproducible and modular ML system that:
 
 ---
 
-## 📊 Data Acquisition & Exploration
+## Data Acquisition & Exploration
 
 The dataset includes:
 
@@ -63,9 +63,9 @@ A baseline rule based on medical standards (HbA1c ≥ 6.5%) achieved an accuracy
 
 ---
 
-## ⚙️ Implementation Details
+## Implementation Details
 
-### 1️⃣ Data Preparation
+### Data Preparation
 
 - Categorical variables encoded using One-Hot Encoding
 - Numerical features scaled using StandardScaler
@@ -76,7 +76,7 @@ Data transformation logic was modularized for reproducibility.
 
 ---
 
-### 2️⃣ Model Experimentation
+### Model Experimentation
 
 The following models were trained and evaluated:
 
@@ -95,7 +95,7 @@ Evaluation metrics:
 
 ---
 
-### 3️⃣ Champion Model Selection
+### Champion Model Selection
 
 After comparison, the best-performing model was selected as the **champion model** based on validation performance.
 
@@ -103,6 +103,7 @@ The final model was serialized using:
 
 ```python
 joblib.dump(model, "models/best_diabetes_model.pkl")
+
 ### Serving
 
 a.a.a.a
