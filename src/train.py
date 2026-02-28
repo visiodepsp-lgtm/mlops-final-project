@@ -1,21 +1,56 @@
-# Importing the libraries
+
+import os
+import joblib
 import pandas as pd
-import pickle
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score
 
-dataset = pd.read_csv('data/training/hiring_training.csv')
+def train():
 
-x = dataset.iloc[:, :3]
-y = dataset.iloc[:, -1]
+    # Asegurar que exista carpeta models
+    os.makedirs("models", exist_ok=True)
 
-#Splitting Training and Test Set
-#Since we have a very small dataset, we will train our model with all availabe data.
+    # Cargar dataset
+    df = pd.read_csv("/content/diabetes_prediction_dataset.csv")
 
-from sklearn.linear_model import LinearRegression
-regressor = LinearRegression()
+    X = df.drop("diabetes", axis=1)
+    y = df["diabetes"]
 
-#Fitting model with trainig data
-regressor.fit(x, y)
+    categorical_cols = ["gender", "smoking_history"]
+    numerical_cols = [col for col in X.columns if col not in categorical_cols]
 
-# Saving model to disk
-pickle.dump(regressor, open('models/model.pkl','wb'))
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_cols),
+            ("num", "passthrough", numerical_cols)
+        ]
+    )
+
+    model = Pipeline(steps=[
+        ("preprocessor", preprocessor),
+        ("classifier", RandomForestClassifier(random_state=42))
+    ])
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
+
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)
+
+    print("Model trained successfully!")
+    print(f"Validation Accuracy: {acc:.4f}")
+
+    # Guardar modelo
+    joblib.dump(model, "models/best_diabetes_model.pkl")
+    print("Model saved at models/best_diabetes_model.pkl")
+
+if __name__ == "__main__":
+    train()
 
