@@ -123,7 +123,3 @@ curl -X POST http://127.0.0.1:5000/predict \
   "HbA1c_level": 6.8,
   "blood_glucose_level": 150
 }'
-Using Python request library: 
-```sh
-python src/predict.py
-```
